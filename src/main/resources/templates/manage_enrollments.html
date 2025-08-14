@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/fragments :: header-css}"></head>
+<body>
+
+<div th:replace="~{fragments/fragments :: navbar}"></div>
+
+<div class="container my-4">
+    <div class="card">
+        <div class="card-header">
+            <h2 th:text="'Manage Enrollments for ' + ${student.name}">Manage Enrollments</h2>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/students/updateEnrollments}" method="post">
+                <input type="hidden" name="studentId" th:value="${student.id}" />
+                <div class="form-group">
+                    <label>Select courses to enroll:</label>
+                    <div class="form-check" th:each="course : ${allCourses}">
+                        <input class="form-check-input" type="checkbox" name="courseIds" th:value="${course.id}"
+                               th:checked="${student.enrolledCourseIds.contains(course.id)}" />
+                        <label class="form-check-label" th:text="${course.name}">
+                            Course Name
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Save Changes</button>
+                <a th:href="@{/student/{id}(id=${student.id})}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/fragments :: footer-scripts}"></div>
+
+</body>
+</html>

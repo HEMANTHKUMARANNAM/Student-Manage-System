@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/fragments :: header-css}"></head>
+<body>
+
+<div th:replace="~{fragments/fragments :: navbar}"></div>
+
+<div class="container my-4">
+    <div class="card">
+        <div class="card-header">
+            <h2>Student Details</h2>
+        </div>
+        <div class="card-body">
+            <div th:if="${student}">
+                <h5 class="card-title" th:text="${student.name}">Student Name</h5>
+                <p class="card-text"><strong>ID:</strong> <span th:text="${student.id}"></span></p>
+                <p class="card-text"><strong>Email:</strong> <span th:text="${student.email}"></span></p>
+                <p class="card-text"><strong>Course:</strong> <span th:text="${student.course}"></span></p>
+                <p class="card-text"><strong>Age:</strong> <span th:text="${student.age}"></span></p>
+                <hr>
+                <h5>Enrolled Courses</h5>
+                <div th:if="${enrolledCourses != null and !enrolledCourses.isEmpty()}">
+                    <ul class="list-group">
+                        <li class="list-group-item" th:each="course : ${enrolledCourses}" th:text="${course.name}"></li>
+                    </ul>
+                </div>
+                <div th:if="${enrolledCourses == null or enrolledCourses.isEmpty()}">
+                    <p>Not enrolled in any courses.</p>
+                </div>
+                <hr>
+                <a th:href="@{'/'}" class="btn btn-primary">Back to List</a>
+                <a th:href="@{/showFormForUpdate/{id}(id=${student.id})}" class="btn btn-info">Update</a>
+                <a th:href="@{/students/manageEnrollments/{id}(id=${student.id})}" class="btn btn-success">Manage Enrollments</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5>Attendance History</h5>
+        </div>
+        <div class="card-body">
+            <div th:if="${attendanceRecords != null and !attendanceRecords.isEmpty()}">
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Course</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="record : ${attendanceRecords}">
+                            <td th:text="${courseNames[record.courseId]}"></td>
+                            <td th:text="${#temporals.format(record.date, 'dd-MMM-yyyy')}"></td>
+                            <td th:text="${record.status}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${attendanceRecords == null or attendanceRecords.isEmpty()}">
+                <p>No attendance records found.</p>
+            </div>
+            <div th:if="${student == null}">
+                <div class="alert alert-warning" role="alert">
+                    Student not found.
+                </div>
+                <a th:href="@{'/'}" class="btn btn-primary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/fragments :: footer-scripts}"></div>
+
+</body>
+</html>

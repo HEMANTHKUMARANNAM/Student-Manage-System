@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/fragments :: header-css}"></head>
+<body>
+
+<div th:replace="~{fragments/fragments :: navbar}"></div>
+
+<div class="container my-4">
+    <div class="card">
+        <div class="card-header">
+            <h2>Update Student</h2>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/saveStudent}" th:object="${student}" method="POST">
+                <input type="hidden" th:field="*{id}"/>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" th:field="*{name}" id="name" class="form-control" placeholder="Enter Full Name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" th:field="*{email}" id="email" class="form-control" placeholder="Enter Email Address">
+                </div>
+                <div class="form-group">
+                    <label for="course">Course</label>
+                    <input type="text" th:field="*{course}" id="course" class="form-control" placeholder="Enter Course">
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" th:field="*{age}" id="age" class="form-control" placeholder="Enter Age">
+                </div>
+                <button type="submit" class="btn btn-success">Update Student</button>
+                <a th:href="@{'/'}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/fragments :: footer-scripts}"></div>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/fragments :: header-css}"></head>
+<body>
+
+<div th:replace="~{fragments/fragments :: navbar}"></div>
+
+<div class="container my-4">
+    <div class="card">
+        <div class="card-header">
+            <h2>About This Application</h2>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Student Management System</h5>
+            <p class="card-text">
+                This is a simple, effective Student Management System built with Spring Boot and Thymeleaf. 
+                It allows for easy Create, Read, Update, and Delete (CRUD) operations on student records.
+            </p>
+            <p class="card-text">Version: 1.0.0</p>
+            <hr>
+            <p class="card-text">
+                The application demonstrates a clean architecture with a controller, service, and data layer. 
+                Data is stored in a local JSON file, making it lightweight and easy to deploy.
+            </p>
+            <a th:href="@{'/'}" class="btn btn-primary">Back to Home</a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/fragments :: footer-scripts}"></div>
+
+</body>
+</html>

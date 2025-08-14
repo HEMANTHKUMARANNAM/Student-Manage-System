@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/fragments :: header-css}"></head>
+<body>
+
+<div th:replace="~{fragments/fragments :: navbar}"></div>
+
+<div class="container my-4">
+    <div class="card">
+        <div class="card-header">
+            <h2 th:text="'Attendance for ' + ${course.name} + ' on ' + ${date}">Attendance Sheet</h2>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/attendance/save}" method="POST">
+                <input type="hidden" name="courseId" th:value="${course.id}" />
+                <input type="hidden" name="date" th:value="${date}" />
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="student, iterStat : ${students}">
+                        <td th:text="${student.name}"></td>
+                        <td>
+                            <input type="hidden" name="studentIds" th:value="${student.id}" />
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" th:name="'statuses[' + ${iterStat.index} + ']'" value="Present" checked>
+                                <label class="form-check-label">Present</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" th:name="'statuses[' + ${iterStat.index} + ']'" value="Absent">
+                                <label class="form-check-label">Absent</label>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-success">Save Attendance</button>
+                <a th:href="@{'/'}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/fragments :: footer-scripts}"></div>
+
+</body>
+</html>
